@@ -11,8 +11,8 @@
   DTS:LocaleID="2058"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="53"
-  DTS:VersionGUID="{1C5FDA52-60CD-4E9F-8FA3-D07F84C48C61}">
+  DTS:VersionBuild="55"
+  DTS:VersionGUID="{3EB05328-2521-426D-84D8-F23D02B5EEAC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -1993,6 +1993,23 @@ FROM            Sucursal INNER JOIN
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
+          DTS:refId="Package\Contenedor de secuencias\Tarea Ejecutar SQL 1"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Tarea Ejecutar SQL"
+          DTS:DTSID="{2EAFECD8-2C90-4B58-8A63-47A71A481F9D}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Tarea Ejecutar SQL 1"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{1609CA36-EA37-4301-837F-3082A2E641D3}"
+              SQLTask:SqlStatementSource="DELETE from DimHoraFuncion WHERE HoraFuncion &gt; 2400" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
           DTS:refId="Package\Contenedor de secuencias\TipoBoleto ExtraerDatosCargaDW"
           DTS:CreationName="Microsoft.Pipeline"
           DTS:Description="Data Flow Task"
@@ -2427,6 +2444,14 @@ CROSS JOIN Sala S</property>
           DTS:LogicalAnd="True"
           DTS:ObjectName="Restricción 4"
           DTS:To="Package\Contenedor de secuencias\Sucursal ExtraerDatosCargaDW" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Contenedor de secuencias.PrecedenceConstraints[Restricción 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{3028DE03-00D5-4080-9CA6-704C35356195}"
+          DTS:From="Package\Contenedor de secuencias\Funcion ExtraerDatosCargaDW"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Restricción 5"
+          DTS:To="Package\Contenedor de secuencias\Tarea Ejecutar SQL 1" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
     <DTS:Executable
@@ -7219,39 +7244,39 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
               startId="Package\Crear en DW Fact_Ventas\Derived Column Asigna TipoBoletoSalaKey.Outputs[Derived Column Output]" />
             <path
               refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output5]"
-              endId="Package\Crear en DW Fact_Ventas\Union All 4.Inputs[Union All Input 2]"
-              name="Lookup Match Output"
-              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output4]"
-              endId="Package\Crear en DW Fact_Ventas\Union All 3.Inputs[Union All Input 2]"
-              name="Lookup Match Output"
-              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output3]"
-              endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey.Inputs[Lookup Input]"
-              name="Lookup Match Output"
-              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
-              endId="Package\Crear en DW Fact_Ventas\Union All 2.Inputs[Union All Input 2]"
-              name="Lookup Match Output"
-              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output1]"
-              endId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1]"
-              name="Lookup Match Output"
-              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output4]"
+              endId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1]"
+              name="Lookup Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output3]"
+              endId="Package\Crear en DW Fact_Ventas\Union All 2.Inputs[Union All Input 2]"
+              name="Lookup Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
               endId="Package\Crear en DW Fact_Ventas\Union All 1.Inputs[Union All Input 3]"
               name="Lookup Match Output"
               startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene HoraKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output1]"
+              endId="Package\Crear en DW Fact_Ventas\Union All 3.Inputs[Union All Input 2]"
+              name="Lookup Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output]"
+              endId="Package\Crear en DW Fact_Ventas\Union All 4.Inputs[Union All Input 2]"
+              name="Lookup Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
+              endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Crear en DW Fact_Ventas.Paths[Lookup No Match Output]"
               endId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Inputs[Derived Column Input]"
@@ -7284,24 +7309,24 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
               startId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output]" />
             <path
               refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 13]"
+              endId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Union All Output 1"
+              startId="Package\Crear en DW Fact_Ventas\Union All 4.Outputs[Union All Output 1]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 1]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Inputs[Lookup Input]"
               name="Union All Output 1"
               startId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1]" />
             <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 1]"
+              refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 11]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey.Inputs[Lookup Input]"
               name="Union All Output 1"
               startId="Package\Crear en DW Fact_Ventas\Union All 2.Outputs[Union All Output 1]" />
             <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 11]"
+              refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 12]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey.Inputs[Lookup Input]"
               name="Union All Output 1"
               startId="Package\Crear en DW Fact_Ventas\Union All 1.Outputs[Union All Output 1]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 12]"
-              endId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input]"
-              name="Union All Output 1"
-              startId="Package\Crear en DW Fact_Ventas\Union All 4.Outputs[Union All Output 1]" />
             <path
               refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 14]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene HoraKey.Inputs[Lookup Input]"
@@ -7337,30 +7362,30 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         <NodeLayout
           Size="229,42"
           Id="Package\Contenedor de secuencias\Cliente ExtraerDatosCargaDW"
-          TopLeft="5.5,165.409090909091" />
+          TopLeft="6.5,248.409090909091" />
         <NodeLayout
           Size="234,42"
           Id="Package\Contenedor de secuencias\Funcion ExtraerDatosCargaDW"
-          TopLeft="110.863636363636,5.5" />
+          TopLeft="111.863636363636,88.5" />
         <NodeLayout
           Size="233,42"
           Id="Package\Contenedor de secuencias\Pelicula ExtraerDatosCargaDW"
-          TopLeft="404.863636363636,5.5" />
+          TopLeft="405.863636363636,88.5" />
         <NodeLayout
           Size="237,42"
           Id="Package\Contenedor de secuencias\Sucursal ExtraerDatosCargaDW"
-          TopLeft="248.681818181818,261.590909090909" />
+          TopLeft="249.681818181818,344.590909090909" />
         <NodeLayout
           Size="176,42"
           Id="Package\Contenedor de secuencias\Tarea Ejecutar SQL"
-          TopLeft="280.863636363636,136.5" />
+          TopLeft="281.863636363636,219.5" />
         <NodeLayout
           Size="247,42"
           Id="Package\Contenedor de secuencias\TipoBoleto ExtraerDatosCargaDW"
-          TopLeft="525.5,177.409090909091" />
+          TopLeft="526.5,260.409090909091" />
         <EdgeLayout
           Id="Package\Contenedor de secuencias.PrecedenceConstraints[Restricción]"
-          TopLeft="340.863636363636,136.5">
+          TopLeft="341.863636363636,219.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7394,7 +7419,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Contenedor de secuencias.PrecedenceConstraints[Restricción 1]"
-          TopLeft="396.863636363636,136.5">
+          TopLeft="397.863636363636,219.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7428,7 +7453,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Contenedor de secuencias.PrecedenceConstraints[Restricción 2]"
-          TopLeft="456.863636363636,157.5">
+          TopLeft="457.863636363636,240.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7462,7 +7487,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Contenedor de secuencias.PrecedenceConstraints[Restricción 3]"
-          TopLeft="280.863636363636,157.5">
+          TopLeft="281.863636363636,240.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7496,7 +7521,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Contenedor de secuencias.PrecedenceConstraints[Restricción 4]"
-          TopLeft="368.022727272727,178.5">
+          TopLeft="369.022727272727,261.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7516,20 +7541,58 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="185,42"
+          Id="Package\Contenedor de secuencias\Tarea Ejecutar SQL 1"
+          TopLeft="22,12" />
+        <EdgeLayout
+          Id="Package\Contenedor de secuencias.PrecedenceConstraints[Restricción 5]"
+          TopLeft="228.863636363636,88.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-114.363636363636,-34.5"
+              Start="0,0"
+              End="-114.363636363636,-27">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-13.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-13.25"
+                    Point2="0,-17.25"
+                    Point3="-4,-17.25" />
+                  <mssgle:LineSegment
+                    End="-110.363636363636,-17.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-110.363636363636,-17.25"
+                    Point2="-114.363636363636,-17.25"
+                    Point3="-114.363636363636,-21.25" />
+                  <mssgle:LineSegment
+                    End="-114.363636363636,-27" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="778,359"
-          Size="778,402"
+          PanelSize="778,442"
+          Size="778,485"
           Id="Package\Contenedor de secuencias"
-          TopLeft="49,51" />
+          TopLeft="49,7" />
         <NodeLayout
           Size="208,42"
           Id="Package\Crear en DW Fact_Ventas"
           TopLeft="977,227" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción]"
-          TopLeft="827,250">
+          TopLeft="827,248.75">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -7617,7 +7680,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
     design-time-name="Package\Contenedor de secuencias\Funcion ExtraerDatosCargaDW">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="161,42"
           Id="Package\Contenedor de secuencias\Funcion ExtraerDatosCargaDW\OLE DB Funcion"
@@ -7649,9 +7712,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -7673,9 +7734,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -8009,28 +8068,6 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 1]"
-          TopLeft="1330.99242424242,182">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,48.5656565656567"
-              Start="0,0"
-              End="0,41.0656565656567">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,41.0656565656567" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 13]"
           TopLeft="1031,44.0479797979798">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -8052,7 +8089,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 12]"
+          Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 13]"
           TopLeft="816,608.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -8074,7 +8111,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 11]"
+          Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 12]"
           TopLeft="400.757936507936,511.968253968254">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -8087,6 +8124,28 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,60.3650793650793" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 11]"
+          TopLeft="1330.99242424242,182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.5656565656567"
+              Start="0,0"
+              End="0,41.0656565656567">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.0656565656567" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -8221,7 +8280,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-119.547367959731,32.6477451215987,111.6127734375,11.609375"
+              BoundingBox="-119.547367959732,32.6477451215987,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -8257,7 +8316,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="47.5143203519572,45.5907673775953,111.6127734375,11.609375"
+              BoundingBox="47.514320351957,45.5907673775953,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -8299,6 +8358,78 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output3]"
+          TopLeft="1312.25505050505,72.6868686868687">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.3131313131314"
+              Start="0,0"
+              End="0,59.8131313131314">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.8131313131314" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,24.1018781565657,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output]"
+          TopLeft="506.555555555555,603.916666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="177.444444444445,0"
+              Start="0,0"
+              End="169.944444444445,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="169.944444444445,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="36.7808355034725,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output1]"
+          TopLeft="835.815295815296,361.265512265512">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-115.269841269841,0"
+              Start="0,0"
+              End="-107.769841269841,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-107.769841269841,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-102.076307353671,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
           TopLeft="1335.47727272727,276.565656565657">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -8322,55 +8453,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output]"
-          TopLeft="1215.19191919192,365.987734487734">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-141.376623376624,0"
-              Start="0,0"
-              End="-133.876623376624,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-133.876623376624,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-115.129698407062,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output1]"
-          TopLeft="781.79797979798,43.3131313131313">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="126.20202020202,0"
-              Start="0,0"
-              End="118.70202020202,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="118.70202020202,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="11.15962338226,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
           TopLeft="363.444444444444,372.666666666666">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -8401,79 +8484,55 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-17.85011687748,53.4015945028679,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
-          TopLeft="1312.25505050505,72.6868686868687">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,67.3131313131314"
-              Start="0,0"
-              End="0,59.8131313131314">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,59.8131313131314" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,24.1018781565657,96.3827734375,11.609375"
+              BoundingBox="-17.8501168774801,53.4015945028679,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output4]"
-          TopLeft="835.815295815296,361.265512265512">
+          TopLeft="781.79797979798,43.3131313131313">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-115.269841269841,0"
+              EndConnector="126.20202020202,0"
               Start="0,0"
-              End="-107.769841269841,0">
+              End="118.70202020202,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="-107.769841269841,0" />
+                    End="118.70202020202,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-102.07630735367,5,96.3827734375,11.609375"
+              BoundingBox="11.15962338226,5,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output5]"
-          TopLeft="506.555555555555,603.916666666667">
+          TopLeft="1215.19191919192,365.987734487734">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="177.444444444445,0"
+              EndConnector="-141.376623376624,0"
               Start="0,0"
-              End="169.944444444445,0">
+              End="-133.876623376624,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="169.944444444445,0" />
+                    End="-133.876623376624,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="36.7808355034725,5,96.3827734375,11.609375"
+              BoundingBox="-115.129698407062,5,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -8650,7 +8709,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
