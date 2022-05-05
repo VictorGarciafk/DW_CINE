@@ -11,8 +11,8 @@
   DTS:LocaleID="2058"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="32"
-  DTS:VersionGUID="{0E12006E-D335-4F05-982A-5C10B729BA45}">
+  DTS:VersionBuild="43"
+  DTS:VersionGUID="{630838AD-F9ED-4744-8145-C262BF412B42}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -1989,7 +1989,7 @@ FROM            Sucursal INNER JOIN
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{1609CA36-EA37-4301-837F-3082A2E641D3}"
-              SQLTask:SqlStatementSource="DELETE FROM DWCine.dbo.Fact_Ventas&#xA;DELETE FROM DWCine.dbo.DimHoraFuncion&#xA;DELETE FROM DWCine.dbo.DimPelicula&#xA;DELETE FROM DWCine.dbo.DimTipoBoleto&#xA;DELETE FROM DWCine.dbo.DimCliente&#xA;DELETE FROM DWCine.dbo.DimSucursal" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="DELETE FROM DWCine.dbo.Fact_Ventas&#xA;DELETE FROM DWCine.dbo.DimHoraFuncion&#xA;DELETE FROM DWCine.dbo.DimPelicula&#xA;DELETE FROM DWCine.dbo.DimTipoBoleto&#xA;DELETE FROM DWCine.dbo.DimCliente WHERE&#xA;ClienteKey &gt; 0&#xA;DELETE FROM DWCine.dbo.DimSucursal" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -2444,6 +2444,79 @@ CROSS JOIN Sala S</property>
           version="1">
           <components>
             <component
+              refId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column Asigna ClienteKey 0"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Output].Columns[ClienteKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Output].Columns[ClienteKey]"
+                      name="ClienteKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey"
               componentClassID="Microsoft.Lookup"
               contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
@@ -2479,7 +2552,7 @@ where [refTable].[IDCliente] = ?</property>
                   dataType="System.Int32"
                   description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
                   name="NoMatchBehavior"
-                  typeConverter="LookupNoMatchBehavior">0</property>
+                  typeConverter="LookupNoMatchBehavior">1</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
@@ -2547,7 +2620,6 @@ where [refTable].[IDCliente] = ?</property>
                 <output
                   refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup Match Output]"
                   errorOrTruncationOperation="Lookup"
-                  errorRowDisposition="RedirectRow"
                   exclusionGroup="1"
                   name="Lookup Match Output"
                   synchronousInputId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Inputs[Lookup Input]">
@@ -2685,7 +2757,7 @@ where [refTable].[Fecha] = ?</property>
                       refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey.Inputs[Lookup Input].Columns[Fecha]"
                       cachedDataType="dbDate"
                       cachedName="Fecha"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Fecha]">
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Fecha]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -2843,7 +2915,7 @@ where [refTable].[Fecha] = ?</property>
                       refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey.Inputs[Lookup Input].Columns[FechaVenta]"
                       cachedDataType="dbDate"
                       cachedName="FechaVenta"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[FechaVenta]">
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[FechaVenta]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -3001,7 +3073,7 @@ where [refTable].[HoraFuncion] = ?</property>
                       refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene HoraKey.Inputs[Lookup Input].Columns[Hora]"
                       cachedDataType="i4"
                       cachedName="Hora"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Hora]">
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Hora]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -3159,7 +3231,7 @@ where [refTable].[IDPelicula] = ?</property>
                       refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey.Inputs[Lookup Input].Columns[IDPelicula]"
                       cachedDataType="i4"
                       cachedName="IDPelicula"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDPelicula]">
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDPelicula]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -3317,7 +3389,7 @@ where [refTable].[IDSucursal] = ?</property>
                       refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey.Inputs[Lookup Input].Columns[IDSucursal]"
                       cachedDataType="i4"
                       cachedName="IDSucursal"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDSucursal]">
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDSucursal]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -3448,7 +3520,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDTipoBoleto]};#{Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[TipoSala]};</property>
+                  name="ParameterMap">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDTipoBoleto]};#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[TipoSala]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -3475,7 +3547,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
                       refId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Inputs[Lookup Input].Columns[IDTipoBoleto]"
                       cachedDataType="i4"
                       cachedName="IDTipoBoleto"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDTipoBoleto]">
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDTipoBoleto]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -3493,7 +3565,7 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
                       cachedDataType="str"
                       cachedLength="15"
                       cachedName="TipoSala"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[TipoSala]">
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[TipoSala]">
                       <properties>
                         <property
                           dataType="System.String"
@@ -3644,25 +3716,25 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
                       cachedDataType="cy"
                       cachedName="Precio"
                       externalMetadataColumnId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Precio]"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Precio]" />
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Precio]" />
                     <inputColumn
                       refId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[IDVenta]"
                       cachedDataType="i4"
                       cachedName="IDVenta"
                       externalMetadataColumnId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IDVenta]"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDVenta]" />
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDVenta]" />
                     <inputColumn
                       refId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CantidadAsientos]"
                       cachedDataType="i4"
                       cachedName="CantidadAsientos"
                       externalMetadataColumnId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CantidadAsientos]"
-                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[CantidadAsientos]" />
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[CantidadAsientos]" />
                     <inputColumn
                       refId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ClienteKey]"
                       cachedDataType="i4"
                       cachedName="ClienteKey"
                       externalMetadataColumnId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ClienteKey]"
-                      lineageId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup Match Output].Columns[ClienteKey]" />
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[ClienteKey]" />
                     <inputColumn
                       refId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SucursalKey]"
                       cachedDataType="i4"
@@ -4084,48 +4156,513 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
                 </output>
               </outputs>
             </component>
+            <component
+              refId="Package\Crear en DW Fact_Ventas\Union All"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Union All"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[IDCliente]"
+                      cachedDataType="i4"
+                      cachedName="IDCliente"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDCliente]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDCliente]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[IDFuncion]"
+                      cachedDataType="i4"
+                      cachedName="IDFuncion"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDFuncion]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDFuncion]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[IDTipoBoleto]"
+                      cachedDataType="i4"
+                      cachedName="IDTipoBoleto"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDTipoBoleto]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDTipoBoleto]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[FechaVenta]"
+                      cachedDataType="dbDate"
+                      cachedName="FechaVenta"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[FechaVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[FechaVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[Precio]"
+                      cachedDataType="cy"
+                      cachedName="Precio"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Precio]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Precio]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[IDVenta]"
+                      cachedDataType="i4"
+                      cachedName="IDVenta"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[Fecha]"
+                      cachedDataType="dbDate"
+                      cachedName="Fecha"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Fecha]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Fecha]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[Hora]"
+                      cachedDataType="i4"
+                      cachedName="Hora"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Hora]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Hora]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[IDSucursal]"
+                      cachedDataType="i4"
+                      cachedName="IDSucursal"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDSucursal]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDSucursal]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[TipoSala]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="15"
+                      cachedName="TipoSala"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[TipoSala]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[TipoSala]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[CantidadAsientos]"
+                      cachedDataType="i4"
+                      cachedName="CantidadAsientos"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[CantidadAsientos]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[CantidadAsientos]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[IDPelicula]"
+                      cachedDataType="i4"
+                      cachedName="IDPelicula"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDPelicula]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDPelicula]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1].Columns[ClienteKey]"
+                      cachedDataType="i4"
+                      cachedName="ClienteKey"
+                      lineageId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup Match Output].Columns[ClienteKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[ClienteKey]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[IDCliente]"
+                      cachedDataType="i4"
+                      cachedName="IDCliente"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDCliente]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDCliente]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[IDFuncion]"
+                      cachedDataType="i4"
+                      cachedName="IDFuncion"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDFuncion]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDFuncion]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[IDTipoBoleto]"
+                      cachedDataType="i4"
+                      cachedName="IDTipoBoleto"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDTipoBoleto]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDTipoBoleto]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[FechaVenta]"
+                      cachedDataType="dbDate"
+                      cachedName="FechaVenta"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[FechaVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[FechaVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[Precio]"
+                      cachedDataType="cy"
+                      cachedName="Precio"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Precio]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Precio]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[IDVenta]"
+                      cachedDataType="i4"
+                      cachedName="IDVenta"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDVenta]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDVenta]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[Fecha]"
+                      cachedDataType="dbDate"
+                      cachedName="Fecha"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Fecha]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Fecha]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[Hora]"
+                      cachedDataType="i4"
+                      cachedName="Hora"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[Hora]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Hora]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[IDSucursal]"
+                      cachedDataType="i4"
+                      cachedName="IDSucursal"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDSucursal]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDSucursal]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[TipoSala]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="15"
+                      cachedName="TipoSala"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[TipoSala]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[TipoSala]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[CantidadAsientos]"
+                      cachedDataType="i4"
+                      cachedName="CantidadAsientos"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[CantidadAsientos]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[CantidadAsientos]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[IDPelicula]"
+                      cachedDataType="i4"
+                      cachedName="IDPelicula"
+                      lineageId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output].Columns[IDPelicula]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDPelicula]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2].Columns[ClienteKey]"
+                      cachedDataType="i4"
+                      cachedName="ClienteKey"
+                      lineageId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Output].Columns[ClienteKey]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[ClienteKey]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDCliente]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDCliente]"
+                      name="IDCliente" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDFuncion]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDFuncion]"
+                      name="IDFuncion" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDTipoBoleto]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDTipoBoleto]"
+                      name="IDTipoBoleto" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[FechaVenta]"
+                      dataType="dbDate"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[FechaVenta]"
+                      name="FechaVenta" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Precio]"
+                      dataType="cy"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Precio]"
+                      name="Precio" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDVenta]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDVenta]"
+                      name="IDVenta" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Fecha]"
+                      dataType="dbDate"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Fecha]"
+                      name="Fecha" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Hora]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[Hora]"
+                      name="Hora" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDSucursal]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDSucursal]"
+                      name="IDSucursal" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[TipoSala]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[TipoSala]"
+                      name="TipoSala" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[CantidadAsientos]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[CantidadAsientos]"
+                      name="CantidadAsientos" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDPelicula]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[IDPelicula]"
+                      name="IDPelicula" />
+                    <outputColumn
+                      refId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[ClienteKey]"
+                      dataType="i4"
+                      lineageId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1].Columns[ClienteKey]"
+                      name="ClienteKey" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
           </components>
           <paths>
             <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Derived Column Output]"
+              endId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 2]"
+              name="Derived Column Output"
+              startId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Outputs[Derived Column Output]" />
+            <path
               refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output]"
-              endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Inputs[Lookup Input]"
-              name="Lookup Match Output"
-              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output1]"
-              endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey.Inputs[Lookup Input]"
-              name="Lookup Match Output"
-              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output3]"
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output1]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output4]"
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene HoraKey.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output5]"
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output3]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene HoraKey.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output4]"
               endId="Package\Crear en DW Fact_Ventas\OLE DB Destination.Inputs[OLE DB Destination Input]"
               name="Lookup Match Output"
               startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output5]"
+              endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
+              endId="Package\Crear en DW Fact_Ventas\Union All.Inputs[Union All Input 1]"
+              name="Lookup Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Lookup No Match Output]"
+              endId="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0.Inputs[Derived Column Input]"
+              name="Lookup No Match Output"
+              startId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\Crear en DW Fact_Ventas.Paths[OLE DB Source Output]"
               endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey.Inputs[Lookup Input]"
               name="OLE DB Source Output"
               startId="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Crear en DW Fact_Ventas.Paths[Union All Output 1]"
+              endId="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey.Inputs[Lookup Input]"
+              name="Union All Output 1"
+              startId="Package\Crear en DW Fact_Ventas\Union All.Outputs[Union All Output 1]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -4729,143 +5266,267 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="231,53"
-          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey"
-          TopLeft="227,131" />
+          Size="123,42"
+          Id="Package\Crear en DW Fact_Ventas\Union All"
+          TopLeft="693,25.9090909090909" />
         <NodeLayout
-          Size="189,42"
-          Id="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente"
-          TopLeft="36,29" />
-        <NodeLayout
-          Size="248,42"
-          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey"
-          TopLeft="463,247" />
-        <NodeLayout
-          Size="202,42"
-          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene HoraKey"
-          TopLeft="758,342" />
-        <NodeLayout
-          Size="221,46"
-          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey"
-          TopLeft="356,197" />
+          Size="260,42"
+          Id="Package\Crear en DW Fact_Ventas\Derived Column Asigna ClienteKey 0"
+          TopLeft="370.868686868687,132.050505050505" />
         <NodeLayout
           Size="213,42"
           Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey"
-          TopLeft="125,81" />
+          TopLeft="353.79797979798,28.7171717171717" />
         <NodeLayout
           Size="238,42"
           Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey"
-          TopLeft="609,294" />
+          TopLeft="525.111111111111,261.666666666667" />
+        <NodeLayout
+          Size="217,42"
+          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey"
+          TopLeft="43.111111111111,421.333333333333" />
+        <NodeLayout
+          Size="231,53"
+          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey"
+          TopLeft="955.454545454545,21.3535353535354" />
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Crear en DW Fact_Ventas\OLE DB ventasCliente"
+          TopLeft="34.4343434343434,32.3232323232323" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Crear en DW Fact_Ventas\OLE DB Destination"
+          TopLeft="558.222222222222,418.333333333332" />
+        <NodeLayout
+          Size="248,42"
+          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaFuncionKey"
+          TopLeft="944.747474747475,264.424242424242" />
+        <NodeLayout
+          Size="202,42"
+          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene HoraKey"
+          TopLeft="55.111111111111,256.666666666666" />
+        <NodeLayout
+          Size="221,46"
+          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene SucursalKey"
+          TopLeft="963.040404040404,150.787878787879" />
         <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
-          TopLeft="577,220">
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup No Match Output]"
+          TopLeft="459.583333333333,70.7171717171717">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="10,27"
+              EndConnector="0,61.3333333333333"
               Start="0,0"
-              End="10,19.5">
+              End="0,53.8333333333333">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="6,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="6,0"
-                    Point2="10,0"
-                    Point3="10,4" />
-                  <mssgle:LineSegment
-                    End="10,19.5" />
+                    End="0,53.8333333333333" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-38.19138671875,-17.609375,96.3827734375,11.609375"
+              BoundingBox="-55.80638671875,21.1119791666667,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
+          TopLeft="566.79797979798,48.3131313131313">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="126.20202020202,0"
+              Start="0,0"
+              End="118.70202020202,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="118.70202020202,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.15962338226,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output5]"
+          TopLeft="1072.24747474747,74.3535353535354">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,76.4343434343434"
+              Start="0,0"
+              End="0,68.9343434343434">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,68.9343434343434" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,28.6624842171717,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output4]"
+          TopLeft="260.111111111111,440.833333333332">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="298.111111111111,0"
+              Start="0,0"
+              End="290.611111111111,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="290.611111111111,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="97.1141688368055,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output3]"
+          TopLeft="153.861111111111,298.666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,122.666666666667"
+              Start="0,0"
+              End="0,115.166666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,115.166666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,51.7786458333335,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output2]"
+          TopLeft="525.111111111111,280.166666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-268,0"
+              Start="0,0"
+              End="-260.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-260.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-178.44138671875,5,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output1]"
-          TopLeft="458,157.5">
+          TopLeft="944.747474747475,284.045454545455">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="8.5,39.5"
+              EndConnector="-181.636363636364,0"
               Start="0,0"
-              End="8.5,32">
+              End="-174.136363636364,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="4.5,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="4.5,0"
-                    Point2="8.5,0"
-                    Point3="8.5,4" />
-                  <mssgle:LineSegment
-                    End="8.5,32" />
+                    End="-174.136363636364,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-39.69138671875,-17.609375,96.3827734375,11.609375"
+              BoundingBox="-135.259568536932,5,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output]"
-          TopLeft="338,102">
+          TopLeft="1071.14393939394,196.787878787879">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="4.5,29"
+              EndConnector="0,67.6363636363637"
               Start="0,0"
-              End="4.5,21.5">
+              End="0,60.1363636363637">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0.5,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0.5,0"
-                    Point2="4.5,0"
-                    Point3="4.5,4" />
-                  <mssgle:LineSegment
-                    End="4.5,21.5" />
+                    End="0,60.1363636363637" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-43.69138671875,-17.609375,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,24.2634943181819,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[OLE DB Source Output]"
-          TopLeft="225,50">
+          Id="Package\Crear en DW Fact_Ventas.Paths[Derived Column Output]"
+          TopLeft="542.868686868687,132.050505050505">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="6.5,31"
+              EndConnector="211.631313131313,-64.1414141414141"
               Start="0,0"
-              End="6.5,23.5">
+              End="211.631313131313,-56.6414141414141">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="2.5,0" />
+                    End="0,-21.8919469928644" />
                   <mssgle:CubicBezierSegment
-                    Point1="2.5,0"
-                    Point2="6.5,0"
-                    Point3="6.5,4" />
+                    Point1="0,-21.8919469928644"
+                    Point2="0,-25.8919469928644"
+                    Point3="4,-25.8919469928644" />
                   <mssgle:LineSegment
-                    End="6.5,23.5" />
+                    End="207.631313131313,-25.8919469928644" />
+                  <mssgle:CubicBezierSegment
+                    Point1="207.631313131313,-25.8919469928644"
+                    Point2="211.631313131313,-25.8919469928644"
+                    Point3="211.631313131313,-29.8919469928644" />
+                  <mssgle:LineSegment
+                    End="211.631313131313,-56.6414141414141" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4875,142 +5536,121 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output4]"
-          TopLeft="847,315">
+          Id="Package\Crear en DW Fact_Ventas.Paths[Union All Output 1]"
+          TopLeft="816,47.3813131313131">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="12,27"
+              EndConnector="139.454545454545,0"
               Start="0,0"
-              End="12,19.5">
+              End="131.954545454545,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="8,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="8,0"
-                    Point2="12,0"
-                    Point3="12,4" />
-                  <mssgle:LineSegment
-                    End="12,19.5" />
+                    End="131.954545454545,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-36.19138671875,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output3]"
-          TopLeft="711,268">
+          Id="Package\Crear en DW Fact_Ventas.Paths[OLE DB Source Output]"
+          TopLeft="223.434343434343,51.520202020202">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="17,26"
+              EndConnector="130.363636363636,0"
               Start="0,0"
-              End="17,18.5">
+              End="122.863636363636,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="13,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="13,0"
-                    Point2="17,0"
-                    Point3="17,4" />
-                  <mssgle:LineSegment
-                    End="17,18.5" />
+                    End="122.863636363636,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-31.19138671875,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="217,42"
-          Id="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey"
-          TopLeft="864,395" />
-        <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output5]"
-          TopLeft="960,363">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="12.5,32"
-              Start="0,0"
-              End="12.5,24.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="8.5,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="8.5,0"
-                    Point2="12.5,0"
-                    Point3="12.5,4" />
-                  <mssgle:LineSegment
-                    End="12.5,24.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-35.69138671875,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="177,42"
-          Id="Package\Crear en DW Fact_Ventas\OLE DB Destination"
-          TopLeft="1091,468" />
-        <EdgeLayout
-          Id="Package\Crear en DW Fact_Ventas.Paths[Lookup Match Output6]"
-          TopLeft="972.5,437">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="207,31"
-              Start="0,0"
-              End="207,23.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,11.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,11.5"
-                    Point2="0,15.5"
-                    Point3="4,15.5" />
-                  <mssgle:LineSegment
-                    End="203,15.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="203,15.5"
-                    Point2="207,15.5"
-                    Point3="207,19.5" />
-                  <mssgle:LineSegment
-                    End="207,23.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="55.30861328125,20.5,96.3827734375,11.609375"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimCliente]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimFecha]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimPelicula]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Crear en DW Fact_Ventas\Lookup Obtiene TipoBoletoKey">
     <Properties>
@@ -5044,6 +5684,19 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Crear en DW Fact_Ventas\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -5113,88 +5766,6 @@ where [refTable].[IDTipoBoleto] = ? and [refTable].[DescTipoSala] = ?</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Crear en DW Fact_Ventas\Lookup Obtiene ClienteKey">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DimCliente]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Crear en DW Fact_Ventas\Lookup Obtiene FechaVentaKey">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DimFecha]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Crear en DW Fact_Ventas\Lookup Obtiene PeliculaKey">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[DimPelicula]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Crear en DW Fact_Ventas\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
